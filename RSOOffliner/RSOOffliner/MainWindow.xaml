@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:viewModels="clr-namespace:RSOOffliner.ViewModels"
         xmlns:views="clr-namespace:RSOOffliner.Views"
-        Title="MainWindow" Height="350" Width="925">
+        Title="RSSOffliner" Height="350" Width="925">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300" />
