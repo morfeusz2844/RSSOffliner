@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:models="clr-namespace:RSOOffliner.Models"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="500">
     <GroupBox Header="Informacje o kanale">
         <Grid VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
@@ -18,16 +18,13 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Margin="5" Content="Identyfikator"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Margin="5" 
-                       Text="{Binding Id}"/>
             
             <Label Grid.Row="1" Grid.Column="0" Margin="5" Content="Nazwa kanału"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding FeedTitle}"/>
 
             <Label Grid.Row="2" Grid.Column="0" Margin="5" Content="Opis kanału"/>
             <TextBlock Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding FeedDescription}"/>
-            <ListBox ItemsSource="{Binding RssItem}" SelectedItem="{Binding RssItemSelected}" Grid.Row="3" Grid.Column="0" Grid.IsSharedSizeScope="True">
+            <ListBox ItemsSource="{Binding RssItem}" SelectedItem="{Binding RssItemSelected}" Grid.Row="3" Grid.Column="1" Grid.IsSharedSizeScope="True">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="models:RSS">
                         <Border>
@@ -41,7 +38,6 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RssItemSelected.Description}" Grid.IsSharedSizeScope="True" TextWrapping="Wrap"/>
         </Grid>
     </GroupBox>
 </UserControl>

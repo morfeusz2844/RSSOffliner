@@ -1,1 +1,12 @@
-﻿[{"Id":1,"Name":"WP Polska","Url":"http://wiadomosci.wp.pl/kat,1342,ver,rss,rss.xml"}]
+[
+  {
+    "Id": 1,
+    "Name": "WP Ciekawostki",
+    "Url": "http://wiadomosci.wp.pl/kat,1515,ver,rss,rss.xml"
+  },
+  {
+    "Id": 2,
+    "Name": "Interia",
+    "Url": "http://interia.pl.feedsportal.com/c/34004/f/618045/index.rss"
+  }
+]

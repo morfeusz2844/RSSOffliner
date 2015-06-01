@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Windows;
 using RSOOffliner.Base;
 using RSOOffliner.Models;
 
@@ -90,6 +91,7 @@ namespace RSOOffliner.ViewModels
                 _rssItemSelected = value;
                 String temp = Regex.Replace(_rssItemSelected.Description, @"<[^>]*>", String.Empty);
                 _rssItemSelected.Description = temp;
+                MessageBox.Show(temp,_rssItemSelected.Title);
                 RaisePropertyChanged();
             }
         }

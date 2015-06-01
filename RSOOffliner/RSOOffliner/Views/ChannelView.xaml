@@ -17,10 +17,6 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             
-            <Label Grid.Row="0" Grid.Column="0" Margin="5" Content="Identyfikator"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Margin="5" VerticalAlignment="Center"
-                       Text="{Binding Id}"/>
-            
             <Label Grid.Row="1" Grid.Column="0" Margin="5" Content="Nazwa"/>
             <TextBox Grid.Row="1" Grid.Column="1" Margin="5" 
                      Text="{Binding Name, ValidatesOnDataErrors=True}"/>

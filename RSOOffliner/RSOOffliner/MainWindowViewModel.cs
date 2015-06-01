@@ -194,7 +194,6 @@ namespace RSOOffliner
             RssManager = rss;
             
             MessageBox.Show(String.Format("Zapisałem kanał: {0}", channel.Name));
-            MessageBox.Show(ChannelViewModels.Count+" "+rss.RssItem.Count);
         }
     }
 }
