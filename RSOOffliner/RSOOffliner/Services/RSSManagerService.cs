@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization.Json;
 using System.Xml;
 using Newtonsoft.Json;
 using RSOOffliner.Models;
 using RSOOffliner.ViewModels;
+using Formatting = Newtonsoft.Json.Formatting;
 
 namespace RSOOffliner.Services
 {
@@ -68,11 +65,23 @@ namespace RSOOffliner.Services
         }
         public static void SaveRssInfo(List<Manager> manager)
         {
+
+            string json = JsonConvert.SerializeObject(manager, Formatting.Indented);
+
+
             using (StreamWriter file = File.CreateText(@"Data\tempManager.json"))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, manager);
+                file.Write(json);
             }
+        }
+        public static List<Manager> GetRssInfo()
+        {
+            List<Manager> result;
+            using (StreamReader reader = File.OpenText(@"Data\tempManager.json"))
+            {
+                result = JsonConvert.DeserializeObject<List<Manager>>(reader.ReadToEnd());
+            }
+            return result;
         }
     }
 }

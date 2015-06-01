@@ -1,12 +1,1 @@
-﻿[
-    {
-        "Id": 1,
-        "Name": "WP Polska",
-        "Channel": "http://wiadomosci.wp.pl/kat,1342,ver,rss,rss.xml"
-    },
-    {
-        "Id": 2,
-        "Name": "WP Świat",
-        "Channel": "http://wiadomosci.wp.pl/kat,1356,ver,rss,rss.xml"
-    }
-]
+﻿[{"Id":1,"Name":"WP Polska","Url":"http://wiadomosci.wp.pl/kat,1342,ver,rss,rss.xml"}]

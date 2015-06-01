@@ -48,9 +48,10 @@ namespace RSOOffliner
             set
             {
                 _selectedChannel = value;
-                //if (_selectedChannel.Url != null) {
-                //    RssManager = new RSSManagerViewModel { Url = _selectedChannel.Url, Id = _selectedChannel.Id };
-                //}
+                foreach (var rssManagerViewModel in ChannelViewModels.Where(rssManagerViewModel => rssManagerViewModel.Id == _selectedChannel.Id))
+                {
+                    RssManager = rssManagerViewModel;
+                }
                 RaisePropertyChanged();
             }
         }
@@ -142,6 +143,21 @@ namespace RSOOffliner
                         }
                         IsLoading = false;
                     }, TaskScheduler.FromCurrentSynchronizationContext());
+            IsLoading = true;
+            Task<List<Manager>>.Factory.StartNew(
+                () =>
+                {
+                    return RSSManagerService.GetRssInfo();
+                },TaskCreationOptions.LongRunning)
+                .ContinueWith(
+                    task =>
+                    {
+                        foreach (var manager in task.Result)
+                        {
+                            ChannelViewModels.Add(RSSManagerViewModel.FromManager(manager));
+                        }
+                        IsLoading = false;
+                    },TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         private void OnSave(object _)

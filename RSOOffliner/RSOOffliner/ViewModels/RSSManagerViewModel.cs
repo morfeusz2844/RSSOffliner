@@ -106,7 +106,7 @@ namespace RSOOffliner.ViewModels
             };
         }
 
-        public RSSManagerViewModel FromManager(Manager manager)
+        public static RSSManagerViewModel FromManager(Manager manager)
         {
             return new RSSManagerViewModel
             {

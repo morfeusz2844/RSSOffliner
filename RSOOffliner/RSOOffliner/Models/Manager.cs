@@ -13,7 +13,7 @@ namespace RSOOffliner.Models
         [DataMember]
         public string Url { get; set; }
         [DataMember]
-        public Collection<RSS> RssItem { get; set; }
+        public ObservableCollection<RSS> RssItem { get; set; }
         [DataMember]
         public string FeedTitle { get; set; }
         [DataMember]
