@@ -14,7 +14,6 @@ namespace RSOOffliner.Services
     {
         public static List<Channel> GetChannels()
         {
-            //Thread.Sleep(TimeSpan.FromSeconds(3));
             List<Channel> result;
             var serializer = new DataContractJsonSerializer(typeof(Channel[]));
             using (StreamReader reader = File.OpenText(@"Data\channelsData.json"))
@@ -22,7 +21,6 @@ namespace RSOOffliner.Services
                 var temp = serializer.ReadObject(reader.BaseStream);
                 result = ((Channel[])temp).ToList();
             }
-//            Thread.Sleep(TimeSpan.FromSeconds(3));
             return result;
         }
 

@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 using RSOOffliner.Base;
 using RSOOffliner.Models;
-using RSOOffliner.Services;
 
 namespace RSOOffliner.ViewModels
 {
@@ -100,23 +94,28 @@ namespace RSOOffliner.ViewModels
             }
         }
 
-        private string _rssHTMLContent;
-
-        public string RssHTMLContent
+        public Manager ToManager()
         {
-            get { return _rssHTMLContent; }
-            set
+            return new Manager
             {
-                _rssHTMLContent = value;
-                RaisePropertyChanged();
-            }
+                Id = this.Id,
+                FeedTitle = this.FeedTitle,
+                FeedDescription = this.FeedDescription,
+                Url = this.Url,
+                RssItem = this.RssItem
+            };
         }
 
-        private void LoadRssHTMLContent()
+        public RSSManagerViewModel FromManager(Manager manager)
         {
-            String temp = Regex.Replace(RSSManagerService.readHtml(RssItemSelected.Link), @"<[^>]*>", String.Empty);
-            MessageBox.Show(temp);
-            this.RssHTMLContent = temp;
+            return new RSSManagerViewModel
+            {
+                _id = manager.Id,
+                _url = manager.Url,
+                _feedTitle = manager.FeedTitle,
+                _feedDescription = manager.FeedDescription,
+                _rssItems = (ObservableCollection<RSS>)manager.RssItem
+            };
         }
     }
 }

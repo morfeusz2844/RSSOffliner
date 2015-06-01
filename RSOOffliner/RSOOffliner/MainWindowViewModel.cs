@@ -14,6 +14,18 @@ namespace RSOOffliner
     public class MainWindowViewModel : NotificationObject
     {
         private ObservableCollection<ChannelViewModel> _channels = new ObservableCollection<ChannelViewModel>();
+        private ObservableCollection<RSSManagerViewModel> _channelViewModels = new ObservableCollection<RSSManagerViewModel>();
+
+
+        public ObservableCollection<RSSManagerViewModel> ChannelViewModels
+        {
+            get { return _channelViewModels; }
+            set
+            {
+                _channelViewModels = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public ObservableCollection<ChannelViewModel> Channels
         {
@@ -36,7 +48,9 @@ namespace RSOOffliner
             set
             {
                 _selectedChannel = value;
-                RssManager = new RSSManagerViewModel {Url = _selectedChannel.Url};
+                //if (_selectedChannel.Url != null) {
+                //    RssManager = new RSSManagerViewModel { Url = _selectedChannel.Url, Id = _selectedChannel.Id };
+                //}
                 RaisePropertyChanged();
             }
         }
@@ -49,8 +63,6 @@ namespace RSOOffliner
             set
             {
                 _rssManager = value;
-                RSSManagerService.GetFeed(_rssManager);
-                MessageBox.Show(_rssManager.RssItem.Count.ToString());
                 RaisePropertyChanged();
             }
         }
@@ -137,6 +149,8 @@ namespace RSOOffliner
             IsSaving = true;
             List<Channel> temp = Channels.Select(channelViewModel => channelViewModel.ToChannel()).ToList();
             ChannelService.SaveChannels(temp);
+            List<Manager> tempManagers = ChannelViewModels.Select(rssManagerViewModel => rssManagerViewModel.ToManager()).ToList();
+            RSSManagerService.SaveRssInfo(tempManagers);
             IsSaving = false;
         }
         private bool CanLoad(object _)
@@ -158,7 +172,13 @@ namespace RSOOffliner
         private void OnSaveChannel(object obj)
         {
             var channel = (ChannelViewModel) obj;
+            var rss = new RSSManagerViewModel {Id = channel.Id,Url=channel.Url};
+            RSSManagerService.GetFeed(rss);
+            ChannelViewModels.Add(rss);
+            RssManager = rss;
+            
             MessageBox.Show(String.Format("Zapisałem kanał: {0}", channel.Name));
+            MessageBox.Show(ChannelViewModels.Count+" "+rss.RssItem.Count);
         }
     }
 }

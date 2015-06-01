@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Newtonsoft.Json;
 using RSOOffliner.Models;
 using RSOOffliner.ViewModels;
 
@@ -26,7 +28,7 @@ namespace RSOOffliner.Services
                 xmlDoc.Load(reader);
                 rssManagerView.FeedTitle = ParseDocElements(xmlDoc.SelectSingleNode("//channel"), "title");
                 rssManagerView.FeedDescription = ParseDocElements(xmlDoc.SelectSingleNode("//channel"), "description");
-                ParseRssItems(xmlDoc, rssManagerView);
+                ParseRssItems(ref xmlDoc, ref rssManagerView);
             }
         }
 
@@ -39,52 +41,38 @@ namespace RSOOffliner.Services
                 return "Unresolvable";
         }
 
-        private static void ParseRssItems(XmlDocument xmlDoc, RSSManagerViewModel rssManagerView)
+        private static void ParseRssItems(ref XmlDocument xmlDoc, ref RSSManagerViewModel rssManagerView)
         {
+//            Collection<RSS> temp = new Collection<RSS>(); 
             rssManagerView.RssItem.Clear();
             XmlNodeList nodes = xmlDoc.SelectNodes("rss/channel/item");
 
             foreach (XmlNode node in nodes)
             {
-                RSS item = new RSS();
-                item.Title = ParseDocElements(node, "title");
-                item.Description = ParseDocElements(node, "description");
-                item.Link = ParseDocElements(node, "link");
+                var item = new RSS
+                {
+                    Title = ParseDocElements(node, "title"),
+                    Description = ParseDocElements(node, "description"),
+                    Link = ParseDocElements(node, "link")
+                };
 
                 string date = null;
                 date = ParseDocElements(node, "pubDate");
-                //DateTime.TryParse(date, out item.Date);
+                DateTime temp;
+                DateTime.TryParse(date, out temp);
+                item.Date = temp;
 
                 rssManagerView.RssItem.Add(item);
 
             }
         }
-
-        public static string readHtml(string url)
+        public static void SaveRssInfo(List<Manager> manager)
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            HttpWebResponse response = (HttpWebResponse) request.GetResponse();
-            var data = String.Empty;;
-            if (response.StatusCode == HttpStatusCode.OK)
+            using (StreamWriter file = File.CreateText(@"Data\tempManager.json"))
             {
-                Stream receiveStream = response.GetResponseStream();
-                StreamReader readStream = null;
-
-                if (response.CharacterSet == null)
-                {
-                    readStream = new StreamReader(receiveStream);
-                }
-                else
-                {
-                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                }
-
-                data = readStream.ReadToEnd();
-
-                response.Close();
-                readStream.Close();
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, manager);
             }
-            return data;
         }
     }
 }
