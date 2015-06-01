@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RSOOffliner.Base;
+﻿using RSOOffliner.Base;
 using RSOOffliner.Models;
 
 namespace RSOOffliner.ViewModels
 {
-    public class ChannelViewModel : ValidationObject
+    public class ChannelViewModel : ValidationObject, IChannelViewModel
     {
         public static ChannelViewModel FromChannel(Channel channel)
         {

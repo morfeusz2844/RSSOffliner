@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Threading;
 using Newtonsoft.Json;
 using RSOOffliner.Models;
-using RSOOffliner.ViewModels;
 
 namespace RSOOffliner.Services
 {
@@ -15,21 +10,19 @@ namespace RSOOffliner.Services
         public static List<Channel> GetChannels()
         {
             List<Channel> result;
-            var serializer = new DataContractJsonSerializer(typeof(Channel[]));
             using (StreamReader reader = File.OpenText(@"Data\channelsData.json"))
             {
-                var temp = serializer.ReadObject(reader.BaseStream);
-                result = ((Channel[])temp).ToList();
+                result = JsonConvert.DeserializeObject<List<Channel>>(reader.ReadToEnd());
             }
             return result;
         }
 
         public static void SaveChannels(List<Channel> channels)
         {
+            string json = JsonConvert.SerializeObject(channels, Formatting.Indented);
             using (StreamWriter file = File.CreateText(@"Data\channelsData.json"))
             {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file,channels);
+                file.Write(json);
             }
         }
     }

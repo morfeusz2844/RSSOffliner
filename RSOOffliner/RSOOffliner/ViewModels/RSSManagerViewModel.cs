@@ -6,7 +6,7 @@ using RSOOffliner.Models;
 
 namespace RSOOffliner.ViewModels
 {
-    public class RSSManagerViewModel : NotificationObject
+    public class RSSManagerViewModel : NotificationObject,IRSSManagerViewModel
     {
         private ObservableCollection<RSS> _rssItems = new ObservableCollection<RSS>();
 

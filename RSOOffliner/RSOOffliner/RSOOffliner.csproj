@@ -55,12 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="IMainWindowViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Models\Manager.cs" />
     <Compile Include="Models\RSS.cs" />
     <Compile Include="Services\ChannelService.cs" />
     <Compile Include="Services\RSSManagerService.cs" />
     <Compile Include="ViewModels\ChannelViewModel.cs" />
+    <Compile Include="ViewModels\IChannelViewModel.cs" />
+    <Compile Include="ViewModels\IRSSManagerViewModel.cs" />
     <Compile Include="ViewModels\RSSManagerViewModel.cs" />
     <Compile Include="Views\ChannelView.xaml.cs">
       <DependentUpon>ChannelView.xaml</DependentUpon>

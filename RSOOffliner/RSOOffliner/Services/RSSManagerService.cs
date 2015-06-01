@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Json;
 using System.Xml;
 using Newtonsoft.Json;
 using RSOOffliner.Models;
@@ -40,7 +38,6 @@ namespace RSOOffliner.Services
 
         private static void ParseRssItems(ref XmlDocument xmlDoc, ref RSSManagerViewModel rssManagerView)
         {
-//            Collection<RSS> temp = new Collection<RSS>(); 
             rssManagerView.RssItem.Clear();
             XmlNodeList nodes = xmlDoc.SelectNodes("rss/channel/item");
 
@@ -65,10 +62,7 @@ namespace RSOOffliner.Services
         }
         public static void SaveRssInfo(List<Manager> manager)
         {
-
             string json = JsonConvert.SerializeObject(manager, Formatting.Indented);
-
-
             using (StreamWriter file = File.CreateText(@"Data\tempManager.json"))
             {
                 file.Write(json);

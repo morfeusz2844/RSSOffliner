@@ -1,0 +1,6 @@
+﻿namespace RSOOffliner
+{
+    interface IMainWindowViewModel
+    {
+    }
+}
