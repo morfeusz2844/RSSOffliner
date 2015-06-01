@@ -1,8 +1,53 @@
 ﻿<Window x:Class="RSOOffliner.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        xmlns:viewModels="clr-namespace:RSOOffliner.ViewModels"
+        xmlns:views="clr-namespace:RSOOffliner.Views"
+        Title="MainWindow" Height="350" Width="925">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListBox Name="_list" Grid.Row="0" Grid.Column="0" Margin="5"
+                 Grid.IsSharedSizeScope="True"
+                 ItemsSource="{Binding Channels}"
+                 SelectedItem="{Binding SelectedChannel}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="viewModels:ChannelViewModel">
+                    <Border>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Names"/>
+                                <ColumnDefinition Width="50"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0" Text="{Binding Id}"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Url}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <DockPanel Grid.Row="0" Grid.Column="1" Margin="5" LastChildFill="False">
+            <views:ChannelView DataContext="{Binding SelectedChannel}" DockPanel.Dock="Top"/>
+            <Button Command="{Binding NewChannelCommand}" Content="Dodaj kanał" DockPanel.Dock="Bottom"/>
+            <Button Command="{Binding SaveChannelCommand}" CommandParameter="{Binding SelectedChannel}"
+                    Content="Zapisz kanał" DockPanel.Dock="Bottom"/>
+        </DockPanel>
+        <Button Grid.Row="1" Grid.Column="0" Command="{Binding LoadCommand}" Margin="5"
+                Content="Wczytaj dane"/>
+        <Button Grid.Row="2" Grid.Column="0" Command="{Binding SaveCommand}" Margin="5" Content="Zapisz dane"/>
+        <DockPanel Grid.Row="0" Grid.Column="2" Margin="5" LastChildFill="False">
+            <views:RSSManagerView DataContext="{Binding RssManager}" DockPanel.Dock="Top"/>
+        </DockPanel>
     </Grid>
 </Window>

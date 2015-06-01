@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="RSOOffliner.Views.RSSManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:models="clr-namespace:RSOOffliner.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <GroupBox Header="Informacje o kanale">
+        <Grid VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" Margin="5" Content="Identyfikator"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" Margin="5" 
+                       Text="{Binding Id}"/>
+            
+            <Label Grid.Row="1" Grid.Column="0" Margin="5" Content="Nazwa kanału"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Margin="5" Text="{Binding FeedTitle}"/>
+
+            <Label Grid.Row="2" Grid.Column="0" Margin="5" Content="Opis kanału"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding FeedDescription}"/>
+            <ListBox ItemsSource="{Binding RssItem}" SelectedItem="{Binding RssItemSelected}" Grid.Row="3" Grid.Column="0" Grid.IsSharedSizeScope="True">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="models:RSS">
+                        <Border>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Title}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding RssItemSelected.Description}" Grid.IsSharedSizeScope="True" TextWrapping="Wrap"/>
+        </Grid>
+    </GroupBox>
+</UserControl>
